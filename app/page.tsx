@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useFetch } from '@/hooks/useFetch'
 import { useCustomQuery } from '@/hooks/useCustomQuery'
+import PostList from '@/components/index/PostList'
 
 export default function Home() {
   const { data } = useCustomQuery('postList', () =>
@@ -21,11 +22,7 @@ export default function Home() {
           height={1080}
           className='rounded-lg'
         />
-
-        <h1>My Blog Posts</h1>
-        {data?.results?.map((item: any) => {
-          return <div key={item.id}>{item.id}</div>
-        })}
+        <PostList data={data?.results || []} />
       </div>
     </div>
   )
