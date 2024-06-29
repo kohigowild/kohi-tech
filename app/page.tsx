@@ -1,27 +1,20 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useFetch } from '@/hooks/useFetch'
+import { useCustomQuery } from '@/hooks/useCustomQuery'
+
 export default function Home() {
-  const [data, setData] = useState(null)
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch('/api/notion')
-        const result = await response.json()
-        console.log(result)
-        setData(result)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-
-    fetchData()
-  }, [])
+  const { data } = useCustomQuery('postList', () =>
+    useFetch({ url: '/api/notion' })
+  )
 
   return (
     <div>
       <h1>My Blog Posts</h1>
+      {data?.results?.map((item: any) => {
+        return <div key={item.id}>{item.id}</div>
+      })}
     </div>
   )
 }
