@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import RecoilProvider from '@/components/common/RecoilProvider'
 import QueryProvider from '@/components/common/QueryProvider'
 import Header from '@/components/common/Header'
+import Loading from '@/components/common/Loading'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,6 +25,7 @@ export default function RootLayout({
         <QueryProvider>
           <body className={inter.className}>
             <Header />
+            <Loading />
             {children}
           </body>
         </QueryProvider>
