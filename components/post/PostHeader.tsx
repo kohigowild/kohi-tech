@@ -1,11 +1,41 @@
 'use client'
 
-import React from 'react'
-import { useRecoilValue } from 'recoil'
+import React, { useEffect } from 'react'
+import { useFetch } from '@/hooks/useFetch'
+import { useCustomQuery } from '@/hooks/useCustomQuery'
+import { useRecoilState } from 'recoil'
+import { getFormatDate } from '@/utils/getFormatDate'
 import { currentPostItem } from '@/atoms/currentPostItem'
 
-export default function PostHeader() {
-  const currentPost = useRecoilValue(currentPostItem)
+export default function PostHeader({ pathname }: { pathname: string }) {
+  const [currentPost, setCurrentPost] = useRecoilState(currentPostItem)
+
+  // currentPost 없는 경우 refetch
+  const { data } = useCustomQuery(
+    'postList',
+    () => useFetch({ url: '/api/notion' }),
+    {
+      enabled: !currentPost?.length,
+    }
+  )
+
+  const getCurrentPost = () => {
+    const curr = data?.results?.filter((post: any) => post.id === pathname)[0]
+    if (!!curr) {
+      const { 이름, 태그, preview, category } = curr?.properties
+      setCurrentPost({
+        id: curr.id || '',
+        category: category?.multi_select[0]?.name || '',
+        created_time: getFormatDate(curr.created_time) || '',
+        title: 이름.title[0]?.plain_text || '',
+        preview: preview?.rich_text[0]?.plain_text || '',
+      })
+    }
+  }
+
+  useEffect(() => {
+    getCurrentPost()
+  }, [data])
 
   return (
     <header className='mb-4 lg:mb-6 not-format'>

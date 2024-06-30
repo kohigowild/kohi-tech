@@ -10,7 +10,6 @@ export const useFetch = async ({ url, options }: UseFetchProps) => {
       throw new Error('Network response was not ok')
     }
     const result = await res.json()
-    console.log(result)
     return result
   } catch (error) {
     console.error('Error fetching data:', error)
