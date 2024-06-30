@@ -1,7 +1,12 @@
+'use client'
+
 import React from 'react'
+import { useRouter } from 'next/navigation'
 import { getFormatDate } from '@/utils/getFormatDate'
 
 export default function PostList({ data }: any) {
+  const router = useRouter()
+
   return (
     <section className='text-gray-600 body-font overflow-hidden'>
       <div className='container px-5 py-24 mx-auto'>
@@ -12,6 +17,7 @@ export default function PostList({ data }: any) {
               <div
                 className='py-8 flex flex-wrap md:flex-nowrap cursor-pointer transition-all ease-in-out duration-500 transform hover:-translate-y-2'
                 key={post.id}
+                onClick={() => router.push(`/post/${post.id}`)}
               >
                 <div className='md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col'>
                   <span className='font-semibold title-font text-[#4150A6]'>
