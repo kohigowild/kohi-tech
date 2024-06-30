@@ -13,14 +13,14 @@ export default function Home() {
 
   return (
     <div className='flex justify-center'>
-      <div className='max-w-screen-sm w-full'>
+      <div className='max-w-screen-md w-full'>
         <Image
           src={'/logo.png'}
           alt='kohi tech'
           layout='responsive'
           width={1920}
           height={1080}
-          className='rounded-lg'
+          className='rounded-lg px-20'
         />
         <PostList data={data?.results || []} />
       </div>

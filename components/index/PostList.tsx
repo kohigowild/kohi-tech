@@ -1,51 +1,39 @@
 import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
+import { getFormatDate } from '@/utils/getFormatDate'
 
 export default function PostList({ data }: any) {
   return (
-    <div>
-      <ol className='relative border-s border-gray-200 dark:border-gray-700'>
-        {data.map((post: any) => {
-          const { 이름, 태그, 텍스트 } = post?.properties
-
-          return (
-            <li className='mb-10 ms-4' key={post.id}>
-              <div className='absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700'></div>
-              <time className='mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500'>
-                {post.created_time || ''}
-              </time>
-              <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
-                {이름.title[0]?.plain_text || '-'}
-              </h3>
-              <p className='mb-4 text-base font-normal text-gray-500 dark:text-gray-400'>
-                {텍스트.rich_text[0]?.plain_text || '-'}
-              </p>
-              <Link
-                href='#'
-                className='inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700'
+    <section className='text-gray-600 body-font overflow-hidden'>
+      <div className='container px-5 py-24 mx-auto'>
+        <div className='-my-8 divide-y-2 divide-gray-100'>
+          {data.map((post: any) => {
+            const { 이름, 태그, preview, category } = post?.properties
+            return (
+              <div
+                className='py-8 flex flex-wrap md:flex-nowrap cursor-pointer transition-all ease-in-out duration-500 transform hover:-translate-y-2'
+                key={post.id}
               >
-                Learn more
-                <svg
-                  className='w-3 h-3 ms-2 rtl:rotate-180'
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 14 10'
-                >
-                  <path
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    d='M1 5h12m0 0L9 1m4 4L9 9'
-                  />
-                </svg>
-              </Link>
-            </li>
-          )
-        })}
-      </ol>
-    </div>
+                <div className='md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col'>
+                  <span className='font-semibold title-font text-[#4150A6]'>
+                    {category?.multi_select[0]?.name || ''}
+                  </span>
+                  <span className='mt-1 text-gray-400 text-sm'>
+                    {getFormatDate(post.created_time) || ''}
+                  </span>
+                </div>
+                <div className='md:flex-grow'>
+                  <h2 className='text-2xl font-medium text-black title-font mb-2'>
+                    {이름.title[0]?.plain_text || '-'}
+                  </h2>
+                  <p className='leading-relaxed line-clamp-3 text-black'>
+                    {preview?.rich_text[0]?.plain_text || '-'}
+                  </p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
   )
 }
