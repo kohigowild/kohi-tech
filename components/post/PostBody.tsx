@@ -27,27 +27,41 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
     case 'heading_1':
       parent = parent.replace(/#+\s*(.*?)(\n|$)/g, '$1\n')
       return (
-        <h1 className='text-5xl font-extrabold dark:text-white'>{parent}</h1>
+        <h1 className='text-5xl text-gray-600 font-extrabold dark:text-white'>
+          {parent}
+        </h1>
       )
     case 'heading_2':
       parent = parent.replace(/#+\s*(.*?)(\n|$)/g, '$1\n')
-      return <h2 className='text-4xl font-bold dark:text-white'>{parent}</h2>
+      return (
+        <h2 className='text-4xl text-gray-600 font-bold dark:text-white'>
+          {parent}
+        </h2>
+      )
     case 'heading_3':
       parent = parent.replace(/#+\s*(.*?)(\n|$)/g, '$1\n')
-      return <h3 className='text-3xl font-bold dark:text-white'>{parent}</h3>
+      return (
+        <h3 className='text-3xl text-gray-600 font-bold dark:text-white'>
+          {parent}
+        </h3>
+      )
     case 'paragraph':
-      return <p className='mb-3 text-gray-600 dark:text-gray-400'>{parent}</p>
+      return (
+        <p className='mb-3 text-gray-600 dark:text-gray-400 leading-normal'>
+          {parent}
+        </p>
+      )
     case 'bulleted_list_item':
       parent = parent.replace(/^\s*[-+*]\s+/gm, '')
       return (
-        <ul className='max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400'>
+        <ul className='max-w-md space-y-1 text-gray-600 list-disc list-inside dark:text-gray-400'>
           <li>{parent}</li>
         </ul>
       )
     case 'callout':
       parent = parent.replace(/^\s*>+\s?/gm, '')
       return (
-        <div className='flex p-4 mb-4 text-sm text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-400'>
+        <div className='flex p-4 mb-4 text-sm text-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-400'>
           <div>
             <span className='font-medium'>{parent}</span>
           </div>
@@ -56,7 +70,7 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
     case 'quote':
       parent = parent.replace(/^\s*>+\s?/gm, '')
       return (
-        <blockquote className='text-xl italic font-semibold text-gray-900 dark:text-white'>
+        <blockquote className='text-xl italic font-semibold text-gray-700 dark:text-white'>
           <svg
             className='w-8 h-8 text-gray-400 dark:text-gray-600 mb-4'
             aria-hidden='true'

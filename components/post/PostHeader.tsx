@@ -39,15 +39,11 @@ export default function PostHeader({ pathname }: { pathname: string }) {
       <address className='flex items-center mb-6 not-italic'>
         <div className='inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white'>
           <div>
-            <span
-              className={`bg-${currentPost.category_color}-100 text-${currentPost.category_color}-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-${currentPost.category_color}-900 dark:text-${currentPost.category_color}-300`}
-            >
+            <span className='bg-[#4150A6] text-white text-sm font-medium me-2 px-2.5 py-0.5 rounded'>
               {currentPost.category}
             </span>
             <p className='text-base text-gray-500 dark:text-gray-400'>
-              <time dateTime='2022-02-08' title='February 8th, 2022'>
-                {currentPost.created_time}
-              </time>
+              {currentPost.created_time}
             </p>
           </div>
         </div>
