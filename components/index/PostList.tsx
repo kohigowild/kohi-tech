@@ -12,11 +12,12 @@ export default function PostList({ data }: any) {
 
   const handleClickPost = (post: any) => {
     const { 이름, 태그, preview, category } = post?.properties
-
+    console.log(post)
     router.push(`/post/${post.id}`)
     setCurrentPost({
       id: post.id || '',
       category: category?.multi_select[0]?.name || '',
+      category_color: category?.multi_select[0]?.color || '',
       created_time: getFormatDate(post.created_time) || '',
       title: 이름.title[0]?.plain_text || '',
       preview: preview?.rich_text[0]?.plain_text || '',
