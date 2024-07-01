@@ -14,7 +14,6 @@ export async function GET(
   const { slug } = params
   try {
     const blocks = await n2m.pageToMarkdown(slug)
-    // const mdString = n2m.toMarkdownString(blocks)
     return new Response(JSON.stringify(blocks), {
       status: 200,
       headers: {

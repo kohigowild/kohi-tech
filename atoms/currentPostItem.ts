@@ -5,6 +5,7 @@ export const currentPostItem = atom<any>({
   default: {
     id: '',
     category: '',
+    category_color: '',
     created_time: '',
     title: '',
     preview: '',
