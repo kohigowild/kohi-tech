@@ -54,7 +54,7 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
       }
       return (
         <p
-          className={`mb-3 text-gray-600 dark:text-gray-400 leading-normal ${
+          className={`mb-3 text-gray-600 dark:text-gray-400 leading-normal text-justify ${
             isBold && 'font-bold'
           }`}
         >
