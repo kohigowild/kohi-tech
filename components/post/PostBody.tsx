@@ -12,6 +12,7 @@ interface BlockType {
     | 'divider'
     | 'quote'
     | 'image'
+    | 'code'
   blockId: string
   parent: string
   children: BlockType[]
@@ -46,15 +47,24 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
         </h3>
       )
     case 'paragraph':
+      let isBold = false
+      if (parent.match(/\*\*(.*?)\*\*/g)) {
+        isBold = true
+        parent = parent.replace(/\*\*(.*?)\*\*/g, '$1')
+      }
       return (
-        <p className='mb-3 text-gray-600 dark:text-gray-400 leading-normal'>
+        <p
+          className={`mb-3 text-gray-600 dark:text-gray-400 leading-normal text-justify ${
+            isBold && 'font-bold'
+          }`}
+        >
           {parent}
         </p>
       )
     case 'bulleted_list_item':
       parent = parent.replace(/^\s*[-+*]\s+/gm, '')
       return (
-        <ul className='max-w-md space-y-1 text-gray-600 list-disc list-inside dark:text-gray-400'>
+        <ul className='space-y-1 text-gray-600 list-disc list-inside dark:text-gray-400'>
           <li>{parent}</li>
         </ul>
       )
@@ -96,6 +106,17 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
           height={1080}
         />
       )
+    case 'code':
+      parent = parent.replace(/^```([\s\S]*)```$/, '$1')
+      const lang = parent.split('\n')[0]
+      const code = parent.split('\n').slice(1).join('\n')
+      return (
+        <div className='max-w-3xl mx-auto mt-8'>
+          <pre className='bg-gray-800 rounded-lg p-6'>
+            <code className='block text-sm font-mono text-white'>{code}</code>
+          </pre>
+        </div>
+      )
     default:
       return <div>{parent}</div>
   }
@@ -106,12 +127,8 @@ export default function PostBody({ data }: any) {
     <div>
       <div>
         {data?.map((block: any) => (
-          <div className='mb-6'>
-            <Block
-              key={block.blockId}
-              type={block.type}
-              parent={block.parent}
-            />
+          <div className='mb-6' key={block.blockId}>
+            <Block type={block.type} parent={block.parent} />
           </div>
         ))}
       </div>
