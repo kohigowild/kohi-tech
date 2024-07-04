@@ -24,46 +24,6 @@ interface BlockProps {
   parent: BlockType['parent']
 }
 
-// const processText = (text: string): ProcessedResult => {
-//   const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
-//   const boldRegex = /\*\*(.*?)\*\*/g
-
-//   let nodeList: React.ReactNode[] = []
-//   let isLink = false
-//   let isBold = false
-//   let lastIndex = 0
-
-//   text.replace(linkRegex, (match, linkText, url, offset) => {
-//     isLink = true
-//     if (offset > lastIndex) {
-//       nodeList.push(text.slice(lastIndex, offset))
-//     }
-//     nodeList.push(
-//       <Link key={url} href={url}>
-//         {linkText}
-//       </Link>
-//     )
-//     lastIndex = offset + match.length
-//     return match
-//   })
-
-//   if (lastIndex < text.length) {
-//     nodeList.push(text.slice(lastIndex))
-//   }
-
-//   let elements = nodeList.flat()
-//   if (text.match(boldRegex)) {
-//     isBold = true,
-//     elements = elements.replace(/\*\*(.*?)\*\*/g, '$1')
-//   }
-
-//   return {
-//     elements
-//     isLink,
-//     isBold,
-//   }
-// }
-
 const Block: React.FC<BlockProps> = ({ type, parent }) => {
   switch (type) {
     case 'heading_1':

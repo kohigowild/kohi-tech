@@ -2,13 +2,14 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import { getFormatDate } from '@/utils/getFormatDate'
+import { getFormatDate, isNewPost } from '@/utils/dateFormat'
 import { useSetRecoilState } from 'recoil'
 import { currentPostItem } from '@/atoms/currentPostItem'
 
 export default function PostList({ data }: any) {
   const router = useRouter()
   const setCurrentPost = useSetRecoilState(currentPostItem)
+  const now: Date = new Date()
 
   const handleClickPost = (post: any) => {
     const { 이름, 태그, preview, category } = post?.properties
@@ -26,7 +27,7 @@ export default function PostList({ data }: any) {
 
   return (
     <section className='text-gray-600 body-font overflow-hidden'>
-      <div className='container px-5 py-24 mx-auto'>
+      <div className='container px-5 py-12 mx-auto'>
         <div className='-my-8 divide-y-2 divide-gray-100'>
           {data.map((post: any) => {
             const { 이름, 태그, preview, category } = post?.properties
@@ -40,8 +41,13 @@ export default function PostList({ data }: any) {
                   <span className='font-semibold title-font text-[#4150A6]'>
                     {category?.multi_select[0]?.name || ''}
                   </span>
-                  <span className='mt-1 text-gray-400 text-sm'>
+                  <span className='mt-1 text-gray-400 text-sm mt-2 items-center'>
                     {getFormatDate(post.created_time) || ''}
+                    {isNewPost(post.created_time) && (
+                      <span className='mx-2 bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300'>
+                        New
+                      </span>
+                    )}
                   </span>
                 </div>
                 <div className='md:flex-grow'>
