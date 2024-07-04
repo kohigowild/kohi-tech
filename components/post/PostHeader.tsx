@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { useFetch } from '@/hooks/useFetch'
 import { useCustomQuery } from '@/hooks/useCustomQuery'
 import { useRecoilState } from 'recoil'
-import { getFormatDate } from '@/utils/getFormatDate'
+import { getFormatDate } from '@/utils/dateFormat'
 import { currentPostItem } from '@/atoms/currentPostItem'
 
 export default function PostHeader({ pathname }: { pathname: string }) {
