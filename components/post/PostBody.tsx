@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface BlockType {
   type:
@@ -22,6 +23,46 @@ interface BlockProps {
   type: BlockType['type']
   parent: BlockType['parent']
 }
+
+// const processText = (text: string): ProcessedResult => {
+//   const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
+//   const boldRegex = /\*\*(.*?)\*\*/g
+
+//   let nodeList: React.ReactNode[] = []
+//   let isLink = false
+//   let isBold = false
+//   let lastIndex = 0
+
+//   text.replace(linkRegex, (match, linkText, url, offset) => {
+//     isLink = true
+//     if (offset > lastIndex) {
+//       nodeList.push(text.slice(lastIndex, offset))
+//     }
+//     nodeList.push(
+//       <Link key={url} href={url}>
+//         {linkText}
+//       </Link>
+//     )
+//     lastIndex = offset + match.length
+//     return match
+//   })
+
+//   if (lastIndex < text.length) {
+//     nodeList.push(text.slice(lastIndex))
+//   }
+
+//   let elements = nodeList.flat()
+//   if (text.match(boldRegex)) {
+//     isBold = true,
+//     elements = elements.replace(/\*\*(.*?)\*\*/g, '$1')
+//   }
+
+//   return {
+//     elements
+//     isLink,
+//     isBold,
+//   }
+// }
 
 const Block: React.FC<BlockProps> = ({ type, parent }) => {
   switch (type) {
@@ -48,14 +89,31 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
       )
     case 'paragraph':
       let isBold = false
+      let isLink = false
+
       if (parent.match(/\*\*(.*?)\*\*/g)) {
         isBold = true
         parent = parent.replace(/\*\*(.*?)\*\*/g, '$1')
       }
-      return (
+
+      if (parent.match(/\[([^\]]+)\]\(([^)]+)\)/g)) {
+        isLink = true
+        parent = parent.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+      }
+
+      return isLink ? (
+        <Link
+          href={parent}
+          className={`leading-normal text-justify text-blue-600 dark:text-blue-500 hover:underline ${
+            isBold ? 'font-bold' : ''
+          }`}
+        >
+          {parent}
+        </Link>
+      ) : (
         <p
           className={`mb-3 text-gray-600 dark:text-gray-400 leading-normal text-justify ${
-            isBold && 'font-bold'
+            isBold ? 'font-bold' : ''
           }`}
         >
           {parent}
