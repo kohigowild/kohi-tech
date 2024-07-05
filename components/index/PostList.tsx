@@ -13,7 +13,6 @@ export default function PostList({ data }: any) {
 
   const handleClickPost = (post: any) => {
     const { 이름, preview, category } = post?.properties
-    console.log(post)
     router.push(`/post/${post.id}`)
 
     setCurrentPost({
