@@ -14,6 +14,7 @@ interface BlockType {
     | 'quote'
     | 'image'
     | 'code'
+    | 'table'
   blockId: string
   parent: string
   children: BlockType[]
@@ -36,7 +37,7 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
     case 'heading_2':
       parent = parent.replace(/#+\s*(.*?)(\n|$)/g, '$1\n')
       return (
-        <h2 className='text-4xl text-gray-600 font-bold dark:text-white'>
+        <h2 className='text-4xl text-gray-600 font-bold dark:text-white mt-8'>
           {parent}
         </h2>
       )
@@ -134,6 +135,46 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
             <code className='block text-sm font-mono text-white'>{code}</code>
           </pre>
         </div>
+      )
+    case 'table':
+      const lines = parent.trim().split('\n')
+      const headers = lines[0]
+        .split('|')
+        .map((header) => header.trim())
+        .filter(Boolean)
+      const rows = lines.slice(2).map((line) =>
+        line
+          .split('|')
+          .map((cell) => cell.trim())
+          .filter(Boolean)
+      )
+
+      return (
+        <table className='min-w-full divide-y divide-gray-200'>
+          <thead className='bg-gray-50'>
+            <tr>
+              {headers.map((header, index) => (
+                <th
+                  key={index}
+                  className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                >
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className='bg-white divide-y divide-gray-200'>
+            {rows.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((cell, cellIndex) => (
+                  <td key={cellIndex} className='px-6 py-4 whitespace-nowrap'>
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )
     default:
       return <div>{parent}</div>

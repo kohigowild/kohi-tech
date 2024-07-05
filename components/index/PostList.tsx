@@ -12,9 +12,9 @@ export default function PostList({ data }: any) {
   const now: Date = new Date()
 
   const handleClickPost = (post: any) => {
-    const { 이름, 태그, preview, category } = post?.properties
-    console.log(post)
+    const { 이름, preview, category } = post?.properties
     router.push(`/post/${post.id}`)
+
     setCurrentPost({
       id: post.id || '',
       category: category?.multi_select[0]?.name || '',
@@ -30,7 +30,7 @@ export default function PostList({ data }: any) {
       <div className='container px-5 py-12 mx-auto'>
         <div className='-my-8 divide-y-2 divide-gray-100'>
           {data.map((post: any) => {
-            const { 이름, 태그, preview, category } = post?.properties
+            const { 이름, preview, category } = post?.properties
             return (
               <div
                 className='py-8 flex flex-wrap md:flex-nowrap cursor-pointer transition-all ease-in-out duration-500 transform hover:-translate-y-2'
