@@ -37,7 +37,7 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
     case 'heading_2':
       parent = parent.replace(/#+\s*(.*?)(\n|$)/g, '$1\n')
       return (
-        <h2 className='text-4xl text-gray-600 font-bold dark:text-white'>
+        <h2 className='text-4xl text-gray-600 font-bold dark:text-white mt-8'>
           {parent}
         </h2>
       )
