@@ -50,11 +50,11 @@ const FooterNavigation = ({
   }
 
   return (
-    <footer className='bg-white py-12 mt-12 border-t border-gray-200 sticky bottom-0'>
+    <footer className='bg-white py-10 mt-12 border-t border-gray-200 hidden md:block sticky bottom-0'>
       <div className='container mx-auto flex justify-between items-center'>
         {prevPost?.id ? (
           <>
-            <div className='flex flex-col items-start max-w-xs md:max-w-sm'>
+            <div className='flex flex-col items-start max-w-xs md:max-w-sm transition-all ease-in-out duration-500 transform hover:-translate-y-2'>
               <span className='text-gray-500 text-sm mb-1'>이전글</span>
               <Link
                 href={prevPost?.id || '/'}
@@ -84,7 +84,7 @@ const FooterNavigation = ({
           <div></div>
         )}
         {nextPost?.id ? (
-          <div className='flex flex-col items-end max-w-xs md:max-w-sm'>
+          <div className='flex flex-col items-end max-w-xs md:max-w-sm transition-all ease-in-out duration-500 transform hover:-translate-y-2'>
             <span className='text-gray-500 text-sm mb-1'>다음글</span>
             <Link
               href={nextPost?.id || '/'}

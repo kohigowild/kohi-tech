@@ -19,7 +19,7 @@ export default function Home() {
           layout='responsive'
           width={1920}
           height={1080}
-          className='rounded-lg px-20'
+          className='rounded-lg px-20 hidden md:block'
         />
         <PostList data={data?.results || []} />
       </div>
