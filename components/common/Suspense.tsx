@@ -3,7 +3,7 @@
 import React, { Suspense } from 'react'
 import Loading from '@/components/common/Loading'
 
-export default function RecoilProvider({
+export default function SuspenseProvider({
   children,
 }: Readonly<{
   children: React.ReactNode
