@@ -8,12 +8,12 @@ import { useCustomQuery } from '@/hooks/useCustomQuery'
 import PostList from '@/components/index/PostList'
 import Category from '@/components/index/Category'
 
-import { category } from '@/atoms/category'
-import { postList } from '@/atoms/postList'
+import { category, CategoryIndex } from '@/atoms/category'
+import { postList, PostListTypes } from '@/atoms/postList'
 import { getFormatDate } from '@/utils/dateFormat'
 
 export default function Home() {
-  const [list, setList] = useRecoilState(postList)
+  const [list, setList] = useRecoilState<PostListTypes[]>(postList)
   const setCategory = useSetRecoilState(category)
 
   const { data } = useCustomQuery(
@@ -38,8 +38,32 @@ export default function Home() {
           preview: preview?.rich_text[0]?.plain_text || '',
         }
       })
-
       setList(result)
+
+      const categoryIndexArray: CategoryIndex[] = Array.from(
+        result
+          .reduce(
+            (
+              map: Map<string, CategoryIndex>,
+              post: PostListTypes,
+              index: number
+            ) => {
+              const existingCategory = map.get(post.category)
+              if (!existingCategory) {
+                map.set(post.category, { category: post.category, index })
+              } else {
+                map.set(post.category, {
+                  category: post.category,
+                  index: existingCategory.index + 1,
+                })
+              }
+              return map
+            },
+            new Map<string, CategoryIndex>()
+          )
+          .values()
+      )
+      setCategory(categoryIndexArray)
     }
   }, [data])
 
@@ -52,6 +76,7 @@ export default function Home() {
           sizes='(max-width: 1920px) 100vw, 1920px'
           width={1920}
           height={1080}
+          priority
           className='rounded-lg px-20 hidden md:block'
         />
         <Category />

@@ -1,27 +1,54 @@
 'use client'
 
-import React from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { isNewPost } from '@/utils/dateFormat'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { currentPostItem } from '@/atoms/currentPostItem'
 import { postList, PostListTypes } from '@/atoms/postList'
+import { category, CategoryIndex } from '@/atoms/category'
 
 export default function PostList() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const setCurrentPost = useSetRecoilState(currentPostItem)
   const postListValue = useRecoilValue(postList)
+  const categoryValue = useRecoilValue(category)
+  const [currentList, setCurrentList] = useState<PostListTypes[] | []>([])
 
   const handleClickPost = (post: PostListTypes) => {
     router.push(`/post/${post.id}`)
     setCurrentPost(post)
   }
 
+  const getAllPosts = () => {
+    setCurrentList(postListValue)
+  }
+
+  useEffect(() => {
+    getAllPosts()
+  }, [postListValue])
+
+  useEffect(() => {
+    const query = searchParams.get('category')
+    if (query) {
+      const currentCategory = categoryValue.filter(
+        (category: CategoryIndex) => category.index == Number(query)
+      )
+      if (currentCategory?.length > 0) {
+        const categoryFilter = postListValue.filter(
+          (post: PostListTypes) => post.category === currentCategory[0].category
+        )
+        setCurrentList(categoryFilter)
+      }
+    } else getAllPosts()
+  }, [searchParams])
+
   return (
     <section className='text-gray-600 body-font overflow-hidden'>
       <div className='container px-5 py-12 mx-auto'>
         <div className='-my-8 divide-y-2 divide-gray-100'>
-          {postListValue.map((post: PostListTypes) => {
+          {currentList.map((post: PostListTypes) => {
             return (
               <div
                 className='py-8 flex flex-wrap md:flex-nowrap cursor-pointer transition-all ease-in-out duration-500 transform hover:-translate-y-2'
