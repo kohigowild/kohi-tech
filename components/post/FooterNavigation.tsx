@@ -1,46 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { getFormatDate } from '@/utils/dateFormat'
+import { useRecoilValue } from 'recoil'
+import { postList, PostListTypes } from '@/atoms/postList'
 
-interface StateType {
-  id: any
-  category: any
-  category_color: any
-  created_time: string
-  title: any
-  preview: any
-}
-
-const FooterNavigation = ({
-  data,
-  pathname,
-}: {
-  data: any
-  pathname: string
-}) => {
-  const [prevPost, setPrevPost] = useState<StateType | null>(null)
-  const [nextPost, setNextPost] = useState<StateType | null>(null)
-  const setPostItems = (object: any) => {
-    const { 이름, preview, category } = object?.properties || {}
-
-    return {
-      id: object?.id || '',
-      category: category?.multi_select[0]?.name || '',
-      category_color: category?.multi_select[0]?.color || '',
-      created_time: getFormatDate(object?.created_time) || '',
-      title: 이름?.title[0]?.plain_text || '',
-      preview: preview?.rich_text[0]?.plain_text || '',
-    }
-  }
+const FooterNavigation = ({ pathname }: { pathname: string }) => {
+  const list = useRecoilValue(postList)
+  const [prevPost, setPrevPost] = useState<PostListTypes | null>(null)
+  const [nextPost, setNextPost] = useState<PostListTypes | null>(null)
 
   useEffect(() => {
-    if (data) {
-      const currIndex = data.findIndex((obj: any) => obj.id === pathname)
+    if (list?.length > 0) {
+      const currIndex = list.findIndex(
+        (obj: PostListTypes) => obj.id === pathname
+      )
 
-      setPrevPost(setPostItems(data[currIndex - 1]))
-      setNextPost(setPostItems(data[currIndex + 1]))
+      setPrevPost(list[currIndex - 1])
+      setNextPost(list[currIndex + 1])
     }
-  }, [data])
+  }, [list])
 
   const truncateTitle = (title: string, maxLength: number) => {
     if (title.length > maxLength) {

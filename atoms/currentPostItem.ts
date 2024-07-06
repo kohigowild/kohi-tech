@@ -1,6 +1,15 @@
 import { atom } from 'recoil'
 
-export const currentPostItem = atom<any>({
+export interface PostListTypes {
+  id: string
+  category: string
+  category_color: string
+  created_time: string
+  title: string
+  preview: string
+}
+
+export const currentPostItem = atom<PostListTypes>({
   key: 'currentPostItem',
   default: {
     id: '',
