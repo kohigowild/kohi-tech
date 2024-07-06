@@ -1,14 +1,71 @@
 'use client'
 
+import { useEffect } from 'react'
 import Image from 'next/image'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { useFetch } from '@/hooks/useFetch'
 import { useCustomQuery } from '@/hooks/useCustomQuery'
 import PostList from '@/components/index/PostList'
+import Category from '@/components/index/Category'
+
+import { category, CategoryIndex } from '@/atoms/category'
+import { postList, PostListTypes } from '@/atoms/postList'
+import { getFormatDate } from '@/utils/dateFormat'
 
 export default function Home() {
-  const { data } = useCustomQuery('postList', () =>
-    useFetch({ url: '/api/notion' })
+  const [list, setList] = useRecoilState<PostListTypes[]>(postList)
+  const setCategory = useSetRecoilState(category)
+
+  const { data } = useCustomQuery(
+    'postList',
+    () => useFetch({ url: '/api/notion' }),
+    {
+      enabled: !list?.length,
+    }
   )
+
+  useEffect(() => {
+    if (data && data.results?.length > 0) {
+      const result = data.results.map((post: any) => {
+        const { 이름, preview, category } = post?.properties
+
+        return {
+          id: post.id || '',
+          category: category?.multi_select[0]?.name || '',
+          category_color: category?.multi_select[0]?.color || '',
+          created_time: getFormatDate(post.created_time) || '',
+          title: 이름.title[0]?.plain_text || '',
+          preview: preview?.rich_text[0]?.plain_text || '',
+        }
+      })
+      setList(result)
+
+      const categoryIndexArray: CategoryIndex[] = Array.from(
+        result
+          .reduce(
+            (
+              map: Map<string, CategoryIndex>,
+              post: PostListTypes,
+              index: number
+            ) => {
+              const existingCategory = map.get(post.category)
+              if (!existingCategory) {
+                map.set(post.category, { category: post.category, index })
+              } else {
+                map.set(post.category, {
+                  category: post.category,
+                  index: existingCategory.index + 1,
+                })
+              }
+              return map
+            },
+            new Map<string, CategoryIndex>()
+          )
+          .values()
+      )
+      setCategory(categoryIndexArray)
+    }
+  }, [data])
 
   return (
     <div className='flex justify-center'>
@@ -16,12 +73,14 @@ export default function Home() {
         <Image
           src={'/logo.png'}
           alt='kohi tech'
-          layout='responsive'
+          sizes='(max-width: 1920px) 100vw, 1920px'
           width={1920}
           height={1080}
-          className='rounded-lg px-20'
+          priority
+          className='rounded-lg px-20 hidden md:block'
         />
-        <PostList data={data?.results || []} />
+        <Category />
+        <PostList />
       </div>
     </div>
   )
