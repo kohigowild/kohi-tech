@@ -49,7 +49,7 @@ export default function Home() {
         <Image
           src={'/logo.png'}
           alt='kohi tech'
-          layout='responsive'
+          sizes='(max-width: 1920px) 100vw, 1920px'
           width={1920}
           height={1080}
           className='rounded-lg px-20 hidden md:block'

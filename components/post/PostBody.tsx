@@ -120,7 +120,7 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
         <Image
           src={parent}
           alt='kohi tech'
-          layout='responsive'
+          sizes='(max-width: 1920px) 100vw, 1920px'
           width={1920}
           height={1080}
         />
