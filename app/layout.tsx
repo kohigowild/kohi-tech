@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import RecoilProvider from '@/components/common/RecoilProvider'
 import QueryProvider from '@/components/common/QueryProvider'
 import ToastProvider from '@/components/common/ToastProvider'
+import Suspense from '@/components/common/Suspense'
 import Header from '@/components/common/Header'
 import Loading from '@/components/common/Loading'
 import './globals.css'
@@ -24,12 +25,14 @@ export default function RootLayout({
     <html lang='ko'>
       <RecoilProvider>
         <QueryProvider>
-          <body className={inter.className}>
-            <Header />
-            <Loading />
-            {children}
-            <ToastProvider />
-          </body>
+          <Suspense>
+            <body className={inter.className}>
+              <Header />
+              <Loading />
+              {children}
+              <ToastProvider />
+            </body>
+          </Suspense>
         </QueryProvider>
       </RecoilProvider>
     </html>
