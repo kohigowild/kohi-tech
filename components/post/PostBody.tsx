@@ -23,9 +23,10 @@ interface BlockType {
 interface BlockProps {
   type: BlockType['type']
   parent: BlockType['parent']
+  blockId: BlockType['blockId']
 }
 
-const Block: React.FC<BlockProps> = ({ type, parent }) => {
+const Block: React.FC<BlockProps> = ({ type, parent, blockId }) => {
   switch (type) {
     case 'heading_1':
       parent = parent.replace(/#+\s*(.*?)(\n|$)/g, '$1\n')
@@ -115,10 +116,13 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
     case 'divider':
       return <hr className='border-gray-400 dark:border-white' />
     case 'image':
-      parent = parent.match(/!\[.*?\]\((.*?)\)/)?.[1] || ''
+      parent = parent.match(/http.*?\.(jpg|jpeg|png|gif|bmp)/)?.[0] || ''
+      const src = `https://boiling-politician-9bc.notion.site/image/${encodeURIComponent(
+        parent
+      )}?table=block&id=${blockId}&cache=v2`
       return (
         <Image
-          src={parent}
+          src={src}
           alt='kohi tech'
           sizes='(max-width: 1920px) 100vw, 1920px'
           width={1920}
@@ -148,7 +152,6 @@ const Block: React.FC<BlockProps> = ({ type, parent }) => {
           .map((cell) => cell.trim())
           .filter(Boolean)
       )
-
       return (
         <table className='min-w-full divide-y divide-gray-200'>
           <thead className='bg-gray-50'>
@@ -187,7 +190,11 @@ export default function PostBody({ data }: any) {
       <div>
         {data?.map((block: any) => (
           <div className='mb-6' key={block.blockId}>
-            <Block type={block.type} parent={block.parent} />
+            <Block
+              type={block.type}
+              parent={block.parent}
+              blockId={block.blockId}
+            />
           </div>
         ))}
       </div>
