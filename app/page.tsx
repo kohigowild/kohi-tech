@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { useFetch } from '@/hooks/useFetch'
@@ -14,6 +14,7 @@ import { getFormatDate } from '@/utils/dateFormat'
 
 export default function Home() {
   const [list, setList] = useRecoilState<PostListTypes[]>(postList)
+  const [index, setIndex] = useState<number>(0)
   const setCategory = useSetRecoilState(category)
 
   const { data } = useCustomQuery(
@@ -40,28 +41,19 @@ export default function Home() {
       })
       setList(result)
 
-      const categoryIndexArray: CategoryIndex[] = Array.from(
-        result
-          .reduce(
-            (
-              map: Map<string, CategoryIndex>,
-              post: PostListTypes,
-              index: number
-            ) => {
-              const existingCategory = map.get(post.category)
-              if (!existingCategory) {
-                map.set(post.category, { category: post.category, index })
-              } else {
-                map.set(post.category, {
-                  category: post.category,
-                  index: existingCategory.index + 1,
-                })
-              }
-              return map
-            },
-            new Map<string, CategoryIndex>()
+      const categoryIndexArray: CategoryIndex[] = result.reduce(
+        (acc: CategoryIndex[], cur: PostListTypes) => {
+          const existingCategoryIndex = acc.findIndex(
+            (post) => post.category === cur.category
           )
-          .values()
+
+          if (existingCategoryIndex === -1) {
+            acc.push({ category: cur.category, index: acc.length + 1 })
+          }
+
+          return acc
+        },
+        []
       )
       setCategory(categoryIndexArray)
     }
