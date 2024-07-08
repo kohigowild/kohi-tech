@@ -83,7 +83,7 @@ export default function PostList() {
                         <h2 className='text-2xl font-medium text-black title-font mb-2'>
                           {post.title}
                         </h2>
-                        <p className='leading-relaxed line-clamp-3 text-black'>
+                        <p className='leading-relaxed line-clamp-3 text-black text-justify'>
                           {post.preview}
                         </p>
                       </div>
