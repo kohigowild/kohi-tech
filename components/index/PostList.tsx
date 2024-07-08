@@ -80,10 +80,10 @@ export default function PostList() {
                         </span>
                       </div>
                       <div className='md:flex-grow'>
-                        <h2 className='text-2xl font-medium text-black title-font mb-2'>
+                        <h2 className='text-2xl font-medium text-black dark:text-white title-font mb-2'>
                           {post.title}
                         </h2>
-                        <p className='leading-relaxed line-clamp-3 text-black'>
+                        <p className='leading-relaxed line-clamp-3 text-black dark:text-white text-justify'>
                           {post.preview}
                         </p>
                       </div>

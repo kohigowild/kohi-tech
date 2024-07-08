@@ -127,20 +127,21 @@ table {
   border-spacing: 0;
 }
 
-.pagination {
+.rc-pagination {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 25px 0;
 }
 
-.pagination > li {
+.rc-pagination > li {
   display: inline-block;
   margin-right: 8px;
+  cursor: pointer;
 }
 
-.pagination > li > a,
-.pagination > li > span {
+.rc-pagination > li > a,
+.rc-pagination > li > span {
   display: inline-block;
   padding: 6px 8px;
   min-width: 32px;
@@ -156,17 +157,17 @@ table {
   transition: 0.3s;
 }
 
-.pagination > .active > a,
-.pagination > .active > span,
-.pagination > li > a:hover,
-.pagination > li > span:hover {
+.rc-pagination > .rc-pagination-item-active > a,
+.rc-pagination > .rc-pagination-item-active > span,
+.rc-pagination > li > a:hover,
+.rc-pagination > li > span:hover {
   background-color: #4150a6;
   border-color: #4150a6;
   color: #ffffff;
 }
 
-.pagination > .disabled > a,
-.pagination > .disabled > span {
+.rc-pagination > .rc-pagination-disabled,
+.rc-pagination > .rc-pagination-disabled {
   color: #d7d7d7;
   pointer-events: none;
   cursor: not-allowed;
