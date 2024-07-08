@@ -27,7 +27,7 @@ const FooterNavigation = ({ pathname }: { pathname: string }) => {
   }
 
   return (
-    <footer className='bg-white py-10 mt-12 border-t border-gray-200 hidden md:block sticky bottom-0'>
+    <footer className='bg-white dark:bg-gray-900 py-10 mt-12 border-t border-gray-200 hidden md:block sticky bottom-0'>
       <div className='container mx-auto flex justify-between items-center'>
         {prevPost?.id ? (
           <>

@@ -1,4 +1,4 @@
-export const TRACKING_ID = process.env.NEXT_GA_TRACKING_ID
+export const TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID
 
 export const pageview = (url: string) => {
   if (typeof window.gtag == 'undefined') return

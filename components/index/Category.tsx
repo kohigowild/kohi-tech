@@ -9,7 +9,7 @@ export default function Category() {
   return (
     <>
       {categoryValue?.length > 0 && (
-        <nav className='bg-gray-50 dark:bg-gray-700 rounded-md md:mt-6'>
+        <nav className='bg-gray-50 dark:bg-gray-600 rounded-md md:mt-6'>
           <div className='max-w-screen-xl px-4 py-3 mx-auto'>
             <div className='flex items-center'>
               <ul className='flex flex-row font-medium px-3 mt-0 space-x-8 rtl:space-x-reverse text-sm'>

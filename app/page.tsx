@@ -60,7 +60,7 @@ export default function Home() {
   }, [data])
 
   return (
-    <div className='flex justify-center'>
+    <div className='flex justify-center dark:bg-gray-900'>
       <div className='max-w-screen-md w-full'>
         <Image
           src={'/logo.png'}
