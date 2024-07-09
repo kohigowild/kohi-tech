@@ -4,11 +4,10 @@ Notion API 연동을 통해 구현한 기술 블로그입니다.
 
 ## Install
 
-<code>
+```
 npm install
-<br/>
 npm run dev
-</code>
+```
 
 ## 개발 기간
 
