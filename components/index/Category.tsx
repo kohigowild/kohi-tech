@@ -15,7 +15,7 @@ export default function Category() {
               <ul className='flex flex-row font-medium px-3 mt-0 space-x-8 rtl:space-x-reverse text-sm'>
                 <li>
                   <Link
-                    href='/'
+                    href={{ pathname: '/', query: { page: 1 } }}
                     className='text-gray-900 dark:text-white hover:text-[#4150A6]'
                     aria-current='page'
                   >
@@ -27,7 +27,7 @@ export default function Category() {
                     <Link
                       href={{
                         pathname: '/',
-                        query: { category: category?.index || '' },
+                        query: { category: category?.index || '', page: 1 },
                       }}
                       className='text-gray-900 dark:text-white hover:text-[#4150A6]'
                     >

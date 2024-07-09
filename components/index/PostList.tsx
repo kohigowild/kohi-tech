@@ -12,7 +12,8 @@ import ListPage from './ListPage'
 export default function PostList() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const query = searchParams.get('category')
+  const categoryQ = searchParams.get('category')
+  const pageQ = searchParams.get('page')
 
   const setCurrentPost = useSetRecoilState(currentPostItem)
   const postListValue = useRecoilValue(postList)
@@ -34,9 +35,9 @@ export default function PostList() {
   }
 
   const fetchCategoryPosts = () => {
-    if (query) {
+    if (categoryQ) {
       const currentCategory = categoryValue.filter(
-        (category: CategoryIndex) => category.index == Number(query)
+        (category: CategoryIndex) => category.index == Number(categoryQ)
       )
       if (currentCategory?.length > 0) {
         const categoryFilter = postListValue.filter(
@@ -47,9 +48,22 @@ export default function PostList() {
     } else getAllPosts()
   }
 
+  const handleChangePage = (page: number) => {
+    setPage(page)
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('page', page.toString())
+    router.push(`/?${params.toString()}`)
+  }
+
   useEffect(() => {
     fetchCategoryPosts()
-  }, [postListValue, query])
+  }, [postListValue, categoryQ])
+
+  useEffect(() => {
+    if (pageQ) {
+      handleChangePage(Number(pageQ))
+    }
+  }, [pageQ])
 
   return (
     <>
@@ -94,9 +108,7 @@ export default function PostList() {
                 page={page}
                 itemsCountPerPage={itemsCountPerPage}
                 totalItemsCount={currentList?.length}
-                handlePageChange={(page) => {
-                  setPage(page)
-                }}
+                handlePageChange={(page) => handleChangePage(page)}
               />
             </div>
           </div>
