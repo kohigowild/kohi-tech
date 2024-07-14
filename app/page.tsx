@@ -1,12 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Image from 'next/image'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { useFetch } from '@/hooks/useFetch'
 import { useCustomQuery } from '@/hooks/useCustomQuery'
 import PostList from '@/components/index/PostList'
-import Category from '@/components/index/Category'
 
 import { category, CategoryIndex } from '@/atoms/category'
 import { postList, PostListTypes } from '@/atoms/postList'
@@ -14,7 +13,6 @@ import { getFormatDate } from '@/utils/dateFormat'
 
 export default function Home() {
   const [list, setList] = useRecoilState<PostListTypes[]>(postList)
-  const [index, setIndex] = useState<number>(0)
   const setCategory = useSetRecoilState(category)
 
   const { data } = useCustomQuery(
@@ -71,7 +69,6 @@ export default function Home() {
           priority
           className='rounded-lg px-20 hidden md:block'
         />
-        <Category />
         <PostList />
       </div>
     </div>

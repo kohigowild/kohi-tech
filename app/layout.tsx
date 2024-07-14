@@ -9,6 +9,7 @@ import AnalyticsProvider from '@/components/common/AnalyticsProvider'
 import Suspense from '@/components/common/Suspense'
 import Header from '@/components/common/Header'
 import Loading from '@/components/common/Loading'
+import SideNav from '@/components/common/SideNav'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -49,6 +50,7 @@ export default function RootLayout({
             <AnalyticsProvider>
               <body className={inter.className}>
                 <Header />
+                <SideNav />
                 <Loading />
                 {children}
                 <ToastProvider />
