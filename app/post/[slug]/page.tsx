@@ -11,6 +11,7 @@ import { getFormatDate } from '@/utils/dateFormat'
 
 import PostHeader from '@/components/post/PostHeader'
 import PostBody from '@/components/post/PostBody'
+import Comment from '@/components/post/Comment'
 import FooterNavigation from '@/components/post/FooterNavigation'
 
 export default function page() {
@@ -59,6 +60,9 @@ export default function page() {
             <PostHeader />
             <PostBody data={blockData} />
           </article>
+        </div>
+        <div className='flex justify-between px-4 mx-auto max-w-screen-xl mt-12'>
+          <Comment />
         </div>
       </main>
       <FooterNavigation pathname={pathname} />
