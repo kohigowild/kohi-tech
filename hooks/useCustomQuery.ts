@@ -8,6 +8,7 @@ type UseCustomQueryResult<Data, Error> = {
   data: Data | undefined
   error: Error | null
   isLoading: boolean
+  refetch: () => void
 }
 
 export const useCustomQuery = <Data, Error>(
@@ -17,7 +18,7 @@ export const useCustomQuery = <Data, Error>(
 ): UseCustomQueryResult<Data, Error> => {
   const setIsLoading = useSetRecoilState(isLoadingState)
 
-  const { data, error, ...rest } = useReactQuery<Data, Error>(
+  const { data, error, refetch, ...rest } = useReactQuery<Data, Error>(
     queryKey,
     async () => {
       setIsLoading(true)
@@ -33,6 +34,7 @@ export const useCustomQuery = <Data, Error>(
   return {
     data,
     error,
+    refetch,
     ...rest,
   }
 }
