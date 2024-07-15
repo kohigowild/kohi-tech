@@ -3,6 +3,7 @@ import { usePathname } from 'next/navigation'
 import { useCustomQuery } from '@/hooks/useCustomQuery'
 import { useFetch } from '@/hooks/useFetch'
 import { getFormatDate } from '@/utils/dateFormat'
+import { useToast } from '@/hooks/useToast'
 
 export default function Comment() {
   const [randomNickname, setRandomNickname] = useState<{
@@ -12,6 +13,7 @@ export default function Comment() {
   const [userName, setUserName] = useState<string>('')
   const [comment, setComment] = useState<string>('')
   const pathname = usePathname().substring(6)
+
   const { data: commentData, refetch } = useCustomQuery('getComment', () =>
     useFetch({ url: `/api/comment/${pathname}` })
   )
@@ -70,13 +72,19 @@ export default function Comment() {
   }
 
   const handleConfirmComment = async () => {
-    try {
-      await sendCommentRequest()
-      refetch()
-      setComment('')
-      getUserNickname()
-    } catch (error) {
-      console.error(error)
+    if (userName.trim() === '') {
+      useToast({ text: '닉네임을 입력해 주세요.' })
+    } else if (comment.trim() === '') {
+      useToast({ text: '댓글을 입력해 주세요.' })
+    } else {
+      try {
+        await sendCommentRequest()
+        refetch()
+        setComment('')
+        getUserNickname()
+      } catch (error) {
+        useToast({ text: '댓글 전송 중 오류가 발생했습니다.' })
+      }
     }
   }
 
@@ -108,7 +116,7 @@ export default function Comment() {
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 24 24'
                     fill='currentColor'
-                    className='size-12 flex justify-center w-full mb-2 dark:fill-white'
+                    className='size-12 flex justify-center w-full mb-2 fill-gray-400 dark:fill-white'
                   >
                     <path
                       fillRule='evenodd'
@@ -116,7 +124,9 @@ export default function Comment() {
                       clipRule='evenodd'
                     />
                   </svg>
-                  <div className='dark:text-white'>댓글이 없습니다.</div>
+                  <div className='dark:text-white text-center text-gray-400 text-xs'>
+                    댓글이 없습니다.
+                  </div>
                 </div>
               </div>
             )}
@@ -187,8 +197,8 @@ export default function Comment() {
               id='default-input'
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               placeholder='댓글을 입력해 주세요.'
-              onChange={(e) => setComment(e.target.value)}
               value={comment}
+              onChange={(e) => setComment(e.target.value)}
             />
           </div>
         </div>
