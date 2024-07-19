@@ -31,9 +31,10 @@ interface BlockProps {
   type: BlockType['type']
   parent: BlockType['parent']
   blockId: BlockType['blockId']
+  children: BlockType['children']
 }
 
-const Block: React.FC<BlockProps> = ({ type, parent, blockId }) => {
+const Block: React.FC<BlockProps> = ({ type, parent, children, blockId }) => {
   switch (type) {
     case 'heading_1':
       return <Heading parent={parent} type='h1' />
@@ -49,7 +50,7 @@ const Block: React.FC<BlockProps> = ({ type, parent, blockId }) => {
       }
       return <Paragraph parent={parent} isLink={isLink} />
     case 'bulleted_list_item':
-      return <Bullet parent={parent} />
+      return <Bullet parent={parent} children={children} />
     case 'callout':
       return <Callout parent={parent} />
     case 'quote':
@@ -88,6 +89,7 @@ export default function PostBody({ data }: any) {
             <Block
               type={block.type}
               parent={block.parent}
+              children={block.children}
               blockId={block.blockId}
             />
           </div>
