@@ -1,4 +1,5 @@
 import React from 'react'
+import CodeBlock from 'rc-syntax-highlight'
 
 interface Props {
   parent: string
@@ -12,9 +13,7 @@ export default function Code(props: Props) {
   const code = string.split('\n').slice(1).join('\n')
   return (
     <div className='max-w-3xl mx-auto mt-8'>
-      <pre className='bg-gray-800 rounded-lg p-6'>
-        <code className='block text-sm font-mono text-white'>{code}</code>
-      </pre>
+      <CodeBlock code={code} />
     </div>
   )
 }
