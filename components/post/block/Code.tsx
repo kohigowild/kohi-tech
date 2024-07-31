@@ -13,7 +13,7 @@ export default function Code(props: Props) {
   const code = string.split('\n').slice(1).join('\n')
   return (
     <div className='max-w-3xl mx-auto mt-8'>
-      <CodeBlock code={code} />
+      <CodeBlock lang={lang} code={code} />
     </div>
   )
 }
