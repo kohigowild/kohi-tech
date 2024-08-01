@@ -95,7 +95,7 @@ export default function Comment() {
           <div className='mb-4'>
             {commentData.results?.length > 0 ? (
               commentData.results.map((item: any) => (
-                <div className='comment mb-2' key={item.id}>
+                <div className='mb-2' key={item.id}>
                   <div className='flex'>
                     <div className='text-[#4150a6] font-bold mr-2'>
                       {getCommentInfo(item?.rich_text[0]?.plain_text, 1)}

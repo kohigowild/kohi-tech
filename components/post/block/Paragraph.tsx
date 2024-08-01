@@ -20,7 +20,7 @@ export default function Paragraph(props: Props) {
       {convertMarkdownToJSX(parent)}
     </Link>
   ) : (
-    <div className='mb-3 text-gray-600 dark:text-gray-400 leading-normal text-justify'>
+    <div className='text-gray-600 dark:text-gray-400 leading-normal text-justify'>
       {convertMarkdownToJSX(parent)}
     </div>
   )

@@ -18,7 +18,7 @@ export default function Heading(props: Props) {
         </h1>
       )}
       {type === 'h2' && (
-        <h2 className='text-4xl text-gray-600 font-bold dark:text-white mt-8'>
+        <h2 className='text-4xl text-gray-600 font-bold dark:text-white'>
           {convertMarkdownToJSX(string)}
         </h2>
       )}
