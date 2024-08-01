@@ -17,9 +17,11 @@ export default function Bullet(props: Props) {
       <li>
         {convertMarkdownToJSX(regexFiltered(parent))}
         {children?.length > 0 && (
-          <ul className='ml-6 mt-2 text-gray-600 list-disc list-inside dark:text-gray-400'>
+          <ul className='ml-6 text-gray-600 list-disc list-inside dark:text-gray-400'>
             {children?.map((item: any) => (
-              <li>{convertMarkdownToJSX(regexFiltered(item.parent))} </li>
+              <li key={item.blockId}>
+                {convertMarkdownToJSX(regexFiltered(item.parent))}{' '}
+              </li>
             ))}
           </ul>
         )}

@@ -85,7 +85,7 @@ export default function PostBody({ data }: any) {
     <div>
       <div>
         {data?.map((block: any) => (
-          <div className='mb-6' key={block.blockId}>
+          <div className='py-1 leading-relaxed' key={block.blockId}>
             <Block
               type={block.type}
               parent={block.parent}
