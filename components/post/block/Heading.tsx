@@ -13,17 +13,17 @@ export default function Heading(props: Props) {
   return (
     <>
       {type === 'h1' && (
-        <h1 className='text-5xl text-gray-600 font-extrabold dark:text-white'>
+        <h1 className='text-5xl pt-4 pb-2 text-gray-700 font-extrabold dark:text-white'>
           {convertMarkdownToJSX(string)}
         </h1>
       )}
       {type === 'h2' && (
-        <h2 className='text-4xl text-gray-600 font-bold dark:text-white'>
+        <h2 className='text-4xl pt-4 pb-2 text-gray-700 font-bold dark:text-white'>
           {convertMarkdownToJSX(string)}
         </h2>
       )}
       {type === 'h3' && (
-        <h3 className='text-3xl text-gray-600 font-bold dark:text-white'>
+        <h3 className='text-3xl pt-4 pb-2 text-gray-700 font-bold dark:text-white'>
           {convertMarkdownToJSX(string)}
         </h3>
       )}

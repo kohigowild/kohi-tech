@@ -16,15 +16,15 @@ export default function PostHeader() {
             <span className='bg-[#4150A6] text-white text-sm font-medium me-2 px-2.5 py-0.5 rounded'>
               {currentPost.category}
             </span>
-            <p className='text-base text-gray-500 dark:text-gray-400'>
-              {currentPost.created_time}
-            </p>
           </div>
         </div>
       </address>
-      <h1 className='mb-4 text-5xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>
+      <h1 className='mb-4 text-5xl font-extrabold leading-none tracking-tight text-gray-700 md:text-5xl lg:text-5xl dark:text-white'>
         {currentPost.title}
       </h1>
+      <p className='text-base text-gray-500 dark:text-gray-400'>
+        {currentPost.created_time}
+      </p>
     </header>
   )
 }
