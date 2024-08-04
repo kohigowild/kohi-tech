@@ -80,7 +80,7 @@ export default function PostList() {
                       key={post.id}
                       onClick={() => handleClickPost(post)}
                     >
-                      <div className='md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col'>
+                      <div className='md:w-64 md:mb-0 pt-2 mb-6 flex-shrink-0 flex flex-col'>
                         <span className='font-semibold title-font text-[#4150A6]'>
                           {post.category}
                         </span>
