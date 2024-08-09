@@ -2,7 +2,9 @@ import fetch from 'node-fetch'
 
 async function fetchArticles() {
   try {
-    const response = await fetch('http://localhost:3000/api/articles/download')
+    const response = await fetch(
+      `${process.env.NEXT_DOMAIN}/api/articles/download`
+    )
     const data = await response.json()
 
     if (data.errors) {

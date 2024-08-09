@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build && node scripts/fetch-md.js",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "fetch-md-transfer": "npx tsc scripts/fetch-md.ts"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.15",

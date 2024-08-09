@@ -7,7 +7,7 @@ created_time: 2024-07-31
 요즘 알고리즘 관련 포스트를 작성하다 보니까 문법 강조 없는 코드 블록이 너무 심심했다. 내 블로그에서 코드 블록은 편집 기능도 필요 없고 단순 뷰어의 기능만 하면 되는데, 사용하기에 복잡하거나 무거운 라이브러리는 쓰기 싫었다. 그래서 직접 가볍고 짱쉽게 라이브러리를 한 번 만들어 보기로 함…
 
 
-![5467b28a045dbf189f94aa910ffab5e1.jpg](https://prod-files-secure.s3.us-west-2.amazonaws.com/420927ef-2057-4e77-b9b7-d7005a1db0dd/cfdb6066-1ea4-490e-bc14-6b33d6a0ffe4/5467b28a045dbf189f94aa910ffab5e1.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240809%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240809T135018Z&X-Amz-Expires=3600&X-Amz-Signature=a9191c365251503cd1e09d483c03d7ea34d3b47b54294bc6b47cd57aabbba405&X-Amz-SignedHeaders=host&x-id=GetObject)
+![5467b28a045dbf189f94aa910ffab5e1.jpg](https://prod-files-secure.s3.us-west-2.amazonaws.com/420927ef-2057-4e77-b9b7-d7005a1db0dd/cfdb6066-1ea4-490e-bc14-6b33d6a0ffe4/5467b28a045dbf189f94aa910ffab5e1.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240809%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240809T144121Z&X-Amz-Expires=3600&X-Amz-Signature=7d060279a8dc9ed8a878fd9816cfde9d8c154b0e20794a5b6c6869eb9326c835&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 이런 나 제법 멋져잉
@@ -155,7 +155,7 @@ tsconfig.json
 ```
 
 
-![3573c7789d091f4b432d71b039264417.jpg](https://prod-files-secure.s3.us-west-2.amazonaws.com/420927ef-2057-4e77-b9b7-d7005a1db0dd/2cb4c5b9-f02f-4918-99a4-a12dbf99cfa7/3573c7789d091f4b432d71b039264417.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240809%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240809T135018Z&X-Amz-Expires=3600&X-Amz-Signature=2d59beeaf18c1ec36d8229ca806bc63f785597222e3d9c932451ce29e7af7c5e&X-Amz-SignedHeaders=host&x-id=GetObject)
+![3573c7789d091f4b432d71b039264417.jpg](https://prod-files-secure.s3.us-west-2.amazonaws.com/420927ef-2057-4e77-b9b7-d7005a1db0dd/2cb4c5b9-f02f-4918-99a4-a12dbf99cfa7/3573c7789d091f4b432d71b039264417.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240809%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240809T144122Z&X-Amz-Expires=3600&X-Amz-Signature=dc5ed3ccf0be796831fed188dfe4e5a2646aea81c694ea362810e751cf2ae601&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 ## ☘️ npm 배포
@@ -177,7 +177,7 @@ npm publish
 패키지 배포
 
 
-![%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-07-31_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_9.38.05.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/420927ef-2057-4e77-b9b7-d7005a1db0dd/d72ca1a6-414a-4f2e-b246-3b78e1aadb5a/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-07-31_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_9.38.05.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240809%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240809T135018Z&X-Amz-Expires=3600&X-Amz-Signature=818cd39be2f8ccd6b84c09e3cb20c080e6a21e262e286ce68cd17c4f107f0dee&X-Amz-SignedHeaders=host&x-id=GetObject)
+![%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-07-31_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_9.38.05.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/420927ef-2057-4e77-b9b7-d7005a1db0dd/d72ca1a6-414a-4f2e-b246-3b78e1aadb5a/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-07-31_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_9.38.05.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240809%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240809T144122Z&X-Amz-Expires=3600&X-Amz-Signature=c17b484e01f7b561f89905c88e6bc6296231a16b0599336d3504583b19b5ed0b&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 짜자잔… 🫲 내 첫 번째 오픈 소스 링크 🫱

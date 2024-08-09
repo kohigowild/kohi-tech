@@ -44,7 +44,7 @@ function fetchArticles() {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
-                    return [4 /*yield*/, (0, node_fetch_1.default)('http://localhost:3000/api/articles/download')];
+                    return [4 /*yield*/, (0, node_fetch_1.default)("".concat(process.env.NEXT_DOMAIN, "/api/articles/download"))];
                 case 1:
                     response = _a.sent();
                     return [4 /*yield*/, response.json()];
