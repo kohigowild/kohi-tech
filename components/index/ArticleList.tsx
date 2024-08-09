@@ -3,35 +3,32 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { isNewPost } from '@/utils/dateFormat'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { currentPostItem } from '@/atoms/currentPostItem'
-import { postList, PostListTypes } from '@/atoms/postList'
+import { useRecoilValue } from 'recoil'
+import { articleContext, ArticleListTypes } from '@/atoms/ArticleList'
 import { category, CategoryIndex } from '@/atoms/category'
-import ListPage from './ListPage'
+import ArticlePagination from '@/components/index/ArticlePagination'
 
-export default function PostList() {
+export default function ArticleList() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const categoryQ = searchParams.get('category')
   const pageQ = searchParams.get('page')
 
-  const setCurrentPost = useSetRecoilState(currentPostItem)
-  const postListValue = useRecoilValue(postList)
+  const articleListValue = useRecoilValue(articleContext)
   const categoryValue = useRecoilValue(category)
 
-  const [currentList, setCurrentList] = useState<PostListTypes[] | []>([])
+  const [currentList, setCurrentList] = useState<ArticleListTypes[] | []>([])
   const [page, setPage] = useState<number>(1)
   const itemsCountPerPage = 5
   const indexOfLastPost = page * itemsCountPerPage
   const indexOfFirstPost = indexOfLastPost - itemsCountPerPage
 
-  const handleClickPost = (post: PostListTypes) => {
+  const handleClickPost = (post: ArticleListTypes) => {
     router.push(`/post/${post.id}`)
-    setCurrentPost(post)
   }
 
   const getAllPosts = () => {
-    setCurrentList(postListValue)
+    setCurrentList(articleListValue)
   }
 
   const fetchCategoryPosts = () => {
@@ -40,8 +37,9 @@ export default function PostList() {
         (category: CategoryIndex) => category.index == Number(categoryQ)
       )
       if (currentCategory?.length > 0) {
-        const categoryFilter = postListValue.filter(
-          (post: PostListTypes) => post.category === currentCategory[0].category
+        const categoryFilter = articleListValue.filter(
+          (post: ArticleListTypes) =>
+            post.category === currentCategory[0].category
         )
         setCurrentList(categoryFilter)
       }
@@ -57,7 +55,7 @@ export default function PostList() {
 
   useEffect(() => {
     fetchCategoryPosts()
-  }, [postListValue, categoryQ])
+  }, [articleListValue, categoryQ])
 
   useEffect(() => {
     if (pageQ) {
@@ -73,7 +71,7 @@ export default function PostList() {
             <div className='-my-8 divide-y-2 divide-gray-100'>
               {currentList
                 .slice(indexOfFirstPost, indexOfLastPost)
-                .map((post: PostListTypes) => {
+                .map((post: ArticleListTypes) => {
                   return (
                     <div
                       className='py-8 flex flex-wrap md:flex-nowrap cursor-pointer transition-all ease-in-out duration-500 transform hover:-translate-y-2'
@@ -104,11 +102,11 @@ export default function PostList() {
                     </div>
                   )
                 })}
-              <ListPage
+              <ArticlePagination
                 page={page}
                 itemsCountPerPage={itemsCountPerPage}
                 totalItemsCount={currentList?.length}
-                handlePageChange={(page) => handleChangePage(page)}
+                handlePageChange={(page: number) => handleChangePage(page)}
               />
             </div>
           </div>

@@ -1,17 +1,21 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRecoilValue } from 'recoil'
-import { postList, PostListTypes } from '@/atoms/postList'
+import { articleContext, ArticleListTypes } from '@/atoms/ArticleList'
+import { usePathname } from 'next/navigation'
 
-const FooterNavigation = ({ pathname }: { pathname: string }) => {
-  const list = useRecoilValue(postList)
-  const [prevPost, setPrevPost] = useState<PostListTypes | null>(null)
-  const [nextPost, setNextPost] = useState<PostListTypes | null>(null)
+const FooterNavigation = () => {
+  const pathname = usePathname().substring(6)
+  const list = useRecoilValue(articleContext)
+  const [prevPost, setPrevPost] = useState<ArticleListTypes | null>(null)
+  const [nextPost, setNextPost] = useState<ArticleListTypes | null>(null)
 
   useEffect(() => {
     if (list?.length > 0) {
       const currIndex = list.findIndex(
-        (obj: PostListTypes) => obj.id === pathname
+        (obj: ArticleListTypes) => obj.id === pathname
       )
 
       setPrevPost(list[currIndex - 1])

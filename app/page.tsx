@@ -5,18 +5,18 @@ import Image from 'next/image'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { useFetch } from '@/hooks/useFetch'
 import { useCustomQuery } from '@/hooks/useCustomQuery'
-import PostList from '@/components/index/PostList'
+import ArticleList from '@/components/index/ArticleList'
 
 import { category, CategoryIndex } from '@/atoms/category'
-import { postList, PostListTypes } from '@/atoms/postList'
+import { articleContext, ArticleListTypes } from '@/atoms/ArticleList'
 import { getFormatDate } from '@/utils/dateFormat'
 
 export default function Home() {
-  const [list, setList] = useRecoilState<PostListTypes[]>(postList)
+  const [list, setList] = useRecoilState<ArticleListTypes[]>(articleContext)
   const setCategory = useSetRecoilState(category)
 
   const { data } = useCustomQuery(
-    'postList',
+    'ArticleList',
     () => useFetch({ url: '/api/notion' }),
     {
       enabled: !list?.length,
@@ -40,7 +40,7 @@ export default function Home() {
       setList(result)
 
       const categoryIndexArray: CategoryIndex[] = result.reduce(
-        (acc: CategoryIndex[], cur: PostListTypes) => {
+        (acc: CategoryIndex[], cur: ArticleListTypes) => {
           const existingCategoryIndex = acc.findIndex(
             (post) => post.category === cur.category
           )
@@ -69,7 +69,7 @@ export default function Home() {
           priority
           className='rounded-lg px-20 hidden md:block'
         />
-        <PostList />
+        <ArticleList />
       </div>
     </div>
   )

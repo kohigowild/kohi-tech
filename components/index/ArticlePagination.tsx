@@ -8,7 +8,7 @@ interface Props {
   handlePageChange: (page: number) => void
 }
 
-const ListPage = (props: Props) => {
+const ArticlePagination = (props: Props) => {
   const { page, itemsCountPerPage, totalItemsCount, handlePageChange } = props
 
   return (
@@ -24,4 +24,4 @@ const ListPage = (props: Props) => {
   )
 }
 
-export default ListPage
+export default ArticlePagination

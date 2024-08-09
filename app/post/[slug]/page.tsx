@@ -1,71 +1,62 @@
-'use client'
-
-import React, { useEffect } from 'react'
-import { usePathname } from 'next/navigation'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { useFetch } from '@/hooks/useFetch'
-import { useCustomQuery } from '@/hooks/useCustomQuery'
-import { currentPostItem } from '@/atoms/currentPostItem'
-import { postList } from '@/atoms/postList'
-import { getFormatDate } from '@/utils/dateFormat'
-
-import PostHeader from '@/components/post/PostHeader'
-import PostBody from '@/components/post/PostBody'
+import fs from 'fs'
+import path from 'path'
+import ReactMarkdown from 'react-markdown'
+import { notFound } from 'next/navigation'
+import remarkGfm from 'remark-gfm'
+import matter from 'gray-matter'
+import ArticleHeader from '@/components/post/ArticleHeader'
 import Comment from '@/components/post/Comment'
 import FooterNavigation from '@/components/post/FooterNavigation'
 
-export default function page() {
-  const [list, setList] = useRecoilState(postList)
-  const setCurrentPost = useSetRecoilState(currentPostItem)
-  const pathname = usePathname().substring(6)
+interface ArticleProps {
+  params: {
+    slug: string
+  }
+}
 
-  const { data } = useCustomQuery(
-    'postList',
-    () => useFetch({ url: '/api/notion' }),
-    {
-      enabled: !list?.length,
-    }
-  )
+export default async function PostBody({ params }: ArticleProps) {
+  const { slug } = params
 
-  useEffect(() => {
-    if (data && data.results?.length > 0) {
-      const result = data.results.map((post: any) => {
-        const { 이름, preview, category } = post?.properties
+  // 서버에서 파일 시스템 접근
+  const articlesDirectory = path.join(process.cwd(), 'articles')
+  const filePath = path.join(articlesDirectory, `${slug}.md`)
 
-        return {
-          id: post.id || '',
-          category: category?.multi_select[0]?.name || '',
-          category_color: category?.multi_select[0]?.color || '',
-          created_time: getFormatDate(post.created_time) || '',
-          title: 이름.title[0]?.plain_text || '',
-          preview: preview?.rich_text[0]?.plain_text || '',
-        }
-      })
-      setList(result)
+  if (!fs.existsSync(filePath)) {
+    notFound()
+  }
 
-      const curr = result.filter((post: any) => post.id === pathname)
-      if (curr?.length > 0) setCurrentPost(curr[0])
-    }
-  }, [data])
-
-  const { data: blockData } = useCustomQuery('postBlock', () =>
-    useFetch({ url: `/api/block/${pathname}` })
-  )
+  const fileContents = fs.readFileSync(filePath, 'utf8')
+  const { data: frontMatter, content } = matter(fileContents)
 
   return (
     <>
       <main className='pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased'>
         <div className='flex justify-between px-4 mx-auto max-w-screen-xl'>
           <article className='mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert'>
-            <PostHeader />
-            <PostBody data={blockData} />
+            <ArticleHeader frontMatter={frontMatter} />
+            <div>
+              <div className='prose'>
+                <ReactMarkdown children={content} remarkPlugins={[remarkGfm]} />
+              </div>
+            </div>
           </article>
         </div>
         <div className='flex justify-between px-4 mx-auto max-w-screen-xl mt-12'>
           <Comment />
         </div>
       </main>
-      <FooterNavigation pathname={pathname} />
+      <FooterNavigation />
     </>
   )
+}
+
+export async function generateStaticParams() {
+  const articlesDirectory = path.join(process.cwd(), 'articles')
+  const filenames = fs.readdirSync(articlesDirectory)
+
+  return filenames.map((filename) => {
+    return {
+      slug: filename.replace(/\.md$/, ''),
+    }
+  })
 }
