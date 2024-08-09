@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { useFetch } from '@/hooks/useFetch'
 import { useCustomQuery } from '@/hooks/useCustomQuery'
-import PostList from '@/components/index/PostList'
+import ArticleList from '@/components/index/ArticleList'
 
 import { category, CategoryIndex } from '@/atoms/category'
 import { postList, PostListTypes } from '@/atoms/postList'
@@ -69,7 +69,7 @@ export default function Home() {
           priority
           className='rounded-lg px-20 hidden md:block'
         />
-        <PostList />
+        <ArticleList />
       </div>
     </div>
   )

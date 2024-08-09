@@ -7,9 +7,9 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { currentPostItem } from '@/atoms/currentPostItem'
 import { postList, PostListTypes } from '@/atoms/postList'
 import { category, CategoryIndex } from '@/atoms/category'
-import ListPage from './ListPage'
+import ArticlePagination from '@/components/index/ArticlePagination'
 
-export default function PostList() {
+export default function ArticleList() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const categoryQ = searchParams.get('category')
@@ -104,11 +104,11 @@ export default function PostList() {
                     </div>
                   )
                 })}
-              <ListPage
+              <ArticlePagination
                 page={page}
                 itemsCountPerPage={itemsCountPerPage}
                 totalItemsCount={currentList?.length}
-                handlePageChange={(page) => handleChangePage(page)}
+                handlePageChange={(page: number) => handleChangePage(page)}
               />
             </div>
           </div>

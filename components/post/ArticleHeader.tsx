@@ -5,8 +5,10 @@ import { useRecoilValue } from 'recoil'
 
 import { currentPostItem } from '@/atoms/currentPostItem'
 
-export default function PostHeader() {
+export default function ArticleHeader() {
   const currentPost = useRecoilValue(currentPostItem)
+
+  // 새로고침 시 api call 로직 추가
 
   return (
     <header className='mb-4 lg:mb-6 not-format'>
