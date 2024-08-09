@@ -4,7 +4,7 @@ import { NotionToMarkdown } from 'notion-to-md'
 import dotenv from 'dotenv'
 import fs from 'fs'
 import { join } from 'path'
-import { MdBlock, MdStringObject } from 'notion-to-md/build/types'
+import { MdBlock } from 'notion-to-md/build/types'
 
 dotenv.config()
 
@@ -14,7 +14,7 @@ const n2m = new NotionToMarkdown({ notionClient: notion })
 interface Metadata {
   id: string
   title: string
-  category: string[]
+  category: string
   created_time: string
   preview: string
 }
@@ -48,7 +48,6 @@ async function getArticleDetail(
     created_time: page.created_time,
     preview: preview?.rich_text[0]?.plain_text || '',
   }
-
   return {
     metadata,
     markdown: markdownString, // Markdown 문자열을 반환합니다.
@@ -84,19 +83,12 @@ export async function GET(req: NextRequest) {
     )
 
     articles.forEach(({ metadata, markdown }, index) => {
-      const metadataString = `---
-    title: ${metadata.title}
-    created_time: ${metadata.created_time}
-    ---
-    `
-
-      // 고유한 파일 이름 생성 (예: 타이틀에 인덱스 번호 추가)
-      const fileName = metadata.title
+      const fileName = metadata.id
 
       // 파일 작성
       const error = writeArticleMarkdown(
         fileName,
-        metadataString + markdown // 각 블록을 개별적으로 파일에 저장
+        markdown // 각 블록을 개별적으로 파일에 저장
       )
 
       if (error) {

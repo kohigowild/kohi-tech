@@ -1,9 +1,13 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRecoilValue } from 'recoil'
 import { postList, PostListTypes } from '@/atoms/postList'
+import { usePathname } from 'next/navigation'
 
-const FooterNavigation = ({ pathname }: { pathname: string }) => {
+const FooterNavigation = () => {
+  const pathname = usePathname().substring(6)
   const list = useRecoilValue(postList)
   const [prevPost, setPrevPost] = useState<PostListTypes | null>(null)
   const [nextPost, setNextPost] = useState<PostListTypes | null>(null)
