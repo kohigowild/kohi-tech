@@ -1,0 +1,151 @@
+---
+    title: Python Casino, 자료 구조
+    created_time: 2024-08-03T11:17:00.000Z
+    ---
+    
+## Reference
+
+
+노마드 코더 ⇒ Python으로 웹 스크래퍼 만들기
+
+
+[https://nomadcoders.co/python-for-beginners/lobby](https://nomadcoders.co/python-for-beginners/lobby)
+
+
+## Python Casino
+
+
+```python
+from random import randint
+
+print("Welcome to Python Casino")
+
+pc_choice = randint(1, 100)
+playing = True
+
+while playing:
+    user_choice = int(input("Choose Number (1-100): "))
+    if user_choice == pc_choice:
+        print("You Won!")
+        playing = False
+    elif user_choice > pc_choice:
+        print("Lower!")
+    elif user_choice < pc_choice:
+        print("Higher!")
+```
+
+
+![%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-08-04_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_4.08.33.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/420927ef-2057-4e77-b9b7-d7005a1db0dd/bb4ffc1a-9c6f-4611-9d7f-23ed63f5610f/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-08-04_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_4.08.33.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240809%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240809T002522Z&X-Amz-Expires=3600&X-Amz-Signature=0a603d5a147066c8163402dbde2e10555425e8f35d836fcc427dd3a626aac862&X-Amz-SignedHeaders=host&x-id=GetObject)
+
+
+## List
+
+
+```python
+days_of_week = ["Mon", "Tue", "Wed", "Thu", "Fri"]
+
+# method
+
+print(days_of_week.count("Wed"))
+# count: list 내 특정 value의 개수 카운트
+# result: 1
+
+days_of_week.reverse()
+print(days_of_week)
+# reverse: list 순서를 거꾸로
+# result: ['Fri', 'Thu', 'Wed', 'Tue', 'Mon']
+
+days_of_week.append("Sun")
+print(days_of_week)
+# append: list의 끝에 새로운 value 추가
+# result: ['Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun']
+
+days_of_week.remove("Mon")
+print(days_of_week)
+# remove: list의 특정 value 삭제
+# result: ['Fri', 'Thu', 'Wed', 'Tue', 'Sun']
+
+days_of_week.clear()
+print(days_of_week)
+# clear: 닉값
+# result: []
+```
+
+
+## Tuple
+
+
+튜플은 불변성을 가진다. 즉 값을 변경할 수 없다.
+
+
+```python
+days_of_week = ("Mon", "Tue", "Wed")
+# [] 대신 () 사용
+```
+
+
+## Dictionary
+
+
+```python
+player = {
+    'name' : 'kohi',
+    'age': 10,
+    'fav_food': ['🍣', '🥐']
+}
+
+print(player.get('age'))
+# result: 10
+
+player.pop('age')
+print(player)
+# result: {'name': 'kohi', 'fav_food': ['🍣', '🥐']}
+
+player['xp'] = 1500
+print(player)
+# result: {'name': 'kohi', 'fav_food': ['🍣', '🥐'], 'xp': 1500}
+
+player['fav_food'].append("🌮")
+print(player)
+# result: {'name': 'kohi', 'fav_food': ['🍣', '🥐', '🌮'], 'xp': 1500}
+```
+
+
+## For Loop
+
+
+```python
+websites = (
+    "google.com",
+    "airbnb.com",
+    "twitter.com",
+    "facebook.com"
+)
+
+for x in websites:
+    print(x)
+```
+
+
+```python
+websites = (
+    "https://google.com",
+    "airbnb.com",
+    "twitter.com",
+    "https://facebook.com"
+)
+
+for x in websites:
+    # x.startswith('https://') === False
+    if not (x.startswith('https://')): 
+        x = f"https//{x}"
+    print(x)
+
+"""
+https://google.com
+https//airbnb.com
+https//twitter.com
+https://faceboock.com
+"""
+```
+

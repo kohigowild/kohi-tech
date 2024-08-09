@@ -4,7 +4,7 @@ import { NotionToMarkdown } from 'notion-to-md'
 import dotenv from 'dotenv'
 import fs from 'fs'
 import { join } from 'path'
-import { MdBlock, MdStringObject } from 'notion-to-md/build/types' // 필요한 타입을 가져옵니다.
+import { MdBlock, MdStringObject } from 'notion-to-md/build/types'
 
 dotenv.config()
 
@@ -12,8 +12,11 @@ const notion = new Client({ auth: process.env.NEXT_PUBLIC_NOTION_TOKEN })
 const n2m = new NotionToMarkdown({ notionClient: notion })
 
 interface Metadata {
-  title: { title: { plain_text: string }[] }
-  date?: { date?: { start?: string } }
+  id: string
+  title: string
+  category: string[]
+  created_time: string
+  preview: string
 }
 
 // 아티클 ID 목록 가져오기
@@ -24,22 +27,33 @@ async function getArticleIds(): Promise<string[]> {
   return db.results.map(({ id }) => id)
 }
 
-// 아티클 메타데이터와 상세 내용 가져오기
 async function getArticleDetail(
   pageId: string
 ): Promise<{ metadata: Metadata; markdown: string }> {
-  const blocks: MdBlock[] = await n2m.pageToMarkdown(pageId) // MdBlock 타입의 블록을 가져옵니다.
-  const markdownString = n2m.toMarkdownString(blocks) // 블록을 문자열로 변환합니다.
+  // 페이지의 Markdown 블록을 가져옵니다.
+  const blocks: MdBlock[] = await n2m.pageToMarkdown(pageId)
+  const markdownString: string = n2m.toMarkdownString(blocks).parent || ''
 
-  // Fetch metadata separately if needed
-  const metadata = { title: { title: [{ plain_text: 'Sample Title' }] } } // Adjust this based on actual metadata fetch
+  // 페이지의 메타데이터를 가져옵니다.
+  const page = (await notion.pages.retrieve({ page_id: pageId })) as any
+
+  // 페이지의 속성을 접근하는 방법을 확인합니다.
+  const { 이름, preview, category } = page?.properties
+
+  // 메타데이터를 추출하여 구성합니다.
+  const metadata: Metadata = {
+    id: page.id || '',
+    category: category?.multi_select[0]?.name || '',
+    title: 이름.title[0]?.plain_text || '',
+    created_time: page.created_time,
+    preview: preview?.rich_text[0]?.plain_text || '',
+  }
 
   return {
     metadata,
-    markdown: JSON.stringify(markdownString), // 문자열로 변환된 markdown을 반환
+    markdown: markdownString, // Markdown 문자열을 반환합니다.
   }
 }
-
 // Markdown 파일 생성
 function writeArticleMarkdown(
   title: string,
@@ -69,16 +83,20 @@ export async function GET(req: NextRequest) {
       articleIds.map(async (id: string) => await getArticleDetail(id))
     )
 
-    articles.forEach(({ metadata, markdown }) => {
+    articles.forEach(({ metadata, markdown }, index) => {
       const metadataString = `---
-title: ${metadata.title.title[0].plain_text}
-date: ${metadata.date?.date?.start || 'Unknown'}
----
-`
+    title: ${metadata.title}
+    created_time: ${metadata.created_time}
+    ---
+    `
 
+      // 고유한 파일 이름 생성 (예: 타이틀에 인덱스 번호 추가)
+      const fileName = metadata.title
+
+      // 파일 작성
       const error = writeArticleMarkdown(
-        metadata.title.title[0].plain_text.toLowerCase().replace(/ /g, '-'),
-        metadataString + markdown // 여기에 제대로 된 markdown 문자열을 추가
+        fileName,
+        metadataString + markdown // 각 블록을 개별적으로 파일에 저장
       )
 
       if (error) {

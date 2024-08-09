@@ -22,6 +22,22 @@ export default function Home() {
       enabled: !list?.length,
     }
   )
+  useEffect(() => {
+    async function fetchArticleIds() {
+      try {
+        const response = await fetch('/api/test')
+        if (!response.ok) {
+          throw new Error('Failed to fetch article IDs')
+        }
+        const data = await response.json()
+        console.log(data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    fetchArticleIds()
+  }, [])
 
   useEffect(() => {
     if (data && data.results?.length > 0) {
