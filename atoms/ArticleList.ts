@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
-export interface PostListTypes {
+export interface ArticleListTypes {
   id: string
   category: string
   category_color: string
@@ -9,7 +9,7 @@ export interface PostListTypes {
   preview: string
 }
 
-export const postList = atom<PostListTypes[]>({
-  key: 'postList',
+export const articleContext = atom<ArticleListTypes[]>({
+  key: 'articleContext',
   default: [],
 })

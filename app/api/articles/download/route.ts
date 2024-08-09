@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import fs from 'fs'
 import { join } from 'path'
 import { MdBlock } from 'notion-to-md/build/types'
+import { getFormatDate } from '@/utils/dateFormat'
 
 dotenv.config()
 
@@ -16,7 +17,6 @@ interface Metadata {
   title: string
   category: string
   created_time: string
-  preview: string
 }
 
 // 아티클 ID 목록 가져오기
@@ -45,8 +45,7 @@ async function getArticleDetail(
     id: page.id || '',
     category: category?.multi_select[0]?.name || '',
     title: 이름.title[0]?.plain_text || '',
-    created_time: page.created_time,
-    preview: preview?.rich_text[0]?.plain_text || '',
+    created_time: getFormatDate(page.created_time),
   }
   return {
     metadata,
@@ -82,13 +81,20 @@ export async function GET(req: NextRequest) {
       articleIds.map(async (id: string) => await getArticleDetail(id))
     )
 
-    articles.forEach(({ metadata, markdown }, index) => {
+    articles.forEach(({ metadata, markdown }) => {
       const fileName = metadata.id
+
+      const metadataString = `---
+title: ${metadata.title}
+category: ${metadata.category}
+created_time: ${metadata.created_time}
+---
+`
 
       // 파일 작성
       const error = writeArticleMarkdown(
         fileName,
-        markdown // 각 블록을 개별적으로 파일에 저장
+        metadataString + markdown // 각 블록을 개별적으로 파일에 저장
       )
 
       if (error) {

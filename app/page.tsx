@@ -8,15 +8,15 @@ import { useCustomQuery } from '@/hooks/useCustomQuery'
 import ArticleList from '@/components/index/ArticleList'
 
 import { category, CategoryIndex } from '@/atoms/category'
-import { postList, PostListTypes } from '@/atoms/postList'
+import { articleContext, ArticleListTypes } from '@/atoms/ArticleList'
 import { getFormatDate } from '@/utils/dateFormat'
 
 export default function Home() {
-  const [list, setList] = useRecoilState<PostListTypes[]>(postList)
+  const [list, setList] = useRecoilState<ArticleListTypes[]>(articleContext)
   const setCategory = useSetRecoilState(category)
 
   const { data } = useCustomQuery(
-    'postList',
+    'ArticleList',
     () => useFetch({ url: '/api/notion' }),
     {
       enabled: !list?.length,
@@ -40,7 +40,7 @@ export default function Home() {
       setList(result)
 
       const categoryIndexArray: CategoryIndex[] = result.reduce(
-        (acc: CategoryIndex[], cur: PostListTypes) => {
+        (acc: CategoryIndex[], cur: ArticleListTypes) => {
           const existingCategoryIndex = acc.findIndex(
             (post) => post.category === cur.category
           )
