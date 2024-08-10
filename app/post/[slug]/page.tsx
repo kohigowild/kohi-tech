@@ -14,7 +14,7 @@ interface ArticleProps {
   }
 }
 
-export default async function PostBody({ params }: ArticleProps) {
+export default async function Page({ params }: ArticleProps) {
   const { slug } = params
 
   // 서버에서 파일 시스템 접근

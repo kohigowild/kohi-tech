@@ -47,7 +47,7 @@ export default function ArticleHeader({ frontMatter }: { [key: string]: any }) {
           </div>
         </div>
       </address>
-      <h1 className='mb-4 text-5xl font-extrabold leading-none tracking-tight text-gray-700 md:text-5xl lg:text-5xl dark:text-white'>
+      <h1 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-700 md:text-4xl lg:text-4xl dark:text-white'>
         {frontMatter.title}
       </h1>
       <p className='text-base text-gray-500 dark:text-gray-400'>
