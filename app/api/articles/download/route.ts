@@ -30,29 +30,50 @@ async function getArticleIds(): Promise<string[]> {
 async function getArticleDetail(
   pageId: string
 ): Promise<{ metadata: Metadata; markdown: string }> {
-  // 페이지의 Markdown 블록을 가져옵니다.
   const blocks: MdBlock[] = await n2m.pageToMarkdown(pageId)
-  const markdownString: string = n2m.toMarkdownString(blocks).parent || ''
+  const imageBlockMap: Map<string, string> = new Map()
 
-  // 페이지의 메타데이터를 가져옵니다.
+  blocks.forEach((block) => {
+    if (block.type === 'image') {
+      const imageUrlMatch = block.parent.match(
+        /http.*?\.(jpg|jpeg|png|gif|bmp)/
+      )
+      if (imageUrlMatch) {
+        const imageUrl = imageUrlMatch[0]
+        const src = `https://boiling-politician-9bc.notion.site/image/${encodeURIComponent(
+          imageUrl
+        )}?table=block&id=${block.blockId}&cache=v2`
+
+        imageBlockMap.set(block.parent, `![Image](${src})`)
+      }
+    }
+  })
+
+  let markdownString = n2m.toMarkdownString(blocks).parent || ''
+
+  imageBlockMap.forEach((replacement, originalUrl) => {
+    const escapedUrl = originalUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const regex = new RegExp(escapedUrl, 'g')
+    markdownString = markdownString.replace(regex, replacement)
+  })
+
   const page = (await notion.pages.retrieve({ page_id: pageId })) as any
 
-  // 페이지의 속성을 접근하는 방법을 확인합니다.
-  const { 이름, preview, category } = page?.properties
+  const { 이름, category } = page?.properties
 
-  // 메타데이터를 추출하여 구성합니다.
   const metadata: Metadata = {
     id: page.id || '',
     category: category?.multi_select[0]?.name || '',
     title: 이름.title[0]?.plain_text || '',
     created_time: getFormatDate(page.created_time),
   }
+
   return {
     metadata,
-    markdown: markdownString, // Markdown 문자열을 반환합니다.
+    markdown: markdownString,
   }
 }
-// Markdown 파일 생성
+
 function writeArticleMarkdown(
   title: string,
   markdownString: string
@@ -91,11 +112,7 @@ created_time: ${metadata.created_time}
 ---
 `
 
-      // 파일 작성
-      const error = writeArticleMarkdown(
-        fileName,
-        metadataString + markdown // 각 블록을 개별적으로 파일에 저장
-      )
+      const error = writeArticleMarkdown(fileName, metadataString + markdown)
 
       if (error) {
         errors.push(error)
