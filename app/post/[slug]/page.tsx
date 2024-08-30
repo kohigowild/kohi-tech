@@ -1,9 +1,12 @@
 import fs from 'fs'
 import path from 'path'
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown, { Components } from 'react-markdown'
 import { notFound } from 'next/navigation'
 import remarkGfm from 'remark-gfm'
 import matter from 'gray-matter'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+
 import ArticleHeader from '@/components/post/ArticleHeader'
 import Comment from '@/components/post/Comment'
 import FooterNavigation from '@/components/post/FooterNavigation'
@@ -12,6 +15,13 @@ interface ArticleProps {
   params: {
     slug: string
   }
+}
+
+interface CodeProps {
+  node?: any
+  inline?: boolean
+  className?: string
+  children?: React.ReactNode
 }
 
 export default async function Page({ params }: ArticleProps) {
@@ -36,7 +46,37 @@ export default async function Page({ params }: ArticleProps) {
             <ArticleHeader frontMatter={frontMatter} />
             <div>
               <div className='prose'>
-                <ReactMarkdown children={content} remarkPlugins={[remarkGfm]} />
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    code({
+                      node,
+                      inline,
+                      className,
+                      children,
+                      ...props
+                    }: CodeProps) {
+                      const match = /language-(\w+)/.exec(className || '')
+                      return !inline && match ? (
+                        <SyntaxHighlighter
+                          className='code-block'
+                          style={materialDark}
+                          language={match[1]}
+                          PreTag='div'
+                          {...props}
+                        >
+                          {String(children).replace(/\n$/, '')}
+                        </SyntaxHighlighter>
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      )
+                    },
+                  }}
+                >
+                  {content}
+                </ReactMarkdown>
               </div>
             </div>
           </article>

@@ -172,3 +172,13 @@ table {
   pointer-events: none;
   cursor: not-allowed;
 }
+
+.code-block {
+  background-color: #2f2f2f !important; /* 배경색 제거 */
+  border: none !important; /* 테두리 제거 */
+  overflow: auto; /* 내용 넘칠 때 스크롤 추가 */
+}
+
+pre {
+  background-color: #2f2f2f !important; /* 배경색 제거 */
+}
