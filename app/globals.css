@@ -183,13 +183,12 @@ pre {
   background-color: #2f2f2f !important; /* 배경색 제거 */
 }
 
-.prose :where(code):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+:not(pre) > code {
   background: #f0f0f0;
-  color: #e06c75;
   padding: 0.4em 0.4em;
   margin: 0.2em 0.2em;
   border-radius: 4px;
-  font-size: 0.825em;
+  font-size: 0.825em !important;
   font-weight: 400;
   font-family: monospace;
 }
