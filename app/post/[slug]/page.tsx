@@ -49,6 +49,126 @@ export default async function Page({ params }: ArticleProps) {
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
+                    p({ children, ...props }) {
+                      return (
+                        <p
+                          className='text-gray-800 dark:text-gray-200 my-4'
+                          {...props}
+                        >
+                          {children}
+                        </p>
+                      )
+                    },
+                    a({ children, ...props }) {
+                      return (
+                        <a
+                          className='text-gray-800 dark:text-gray-200 my-4'
+                          {...props}
+                        >
+                          {children}
+                        </a>
+                      )
+                    },
+                    ul({ children, ...props }) {
+                      return (
+                        <ul
+                          className='list-disc list-inside text-gray-800 dark:text-gray-200 my-4'
+                          {...props}
+                        >
+                          {children}
+                        </ul>
+                      )
+                    },
+                    ol({ children, ...props }) {
+                      return (
+                        <ol
+                          className='list-decimal list-inside text-gray-800 dark:text-gray-200 my-4'
+                          {...props}
+                        >
+                          {children}
+                        </ol>
+                      )
+                    },
+                    strong({ children, ...props }) {
+                      return (
+                        <strong
+                          className='font-semibold text-black dark:text-white'
+                          {...props}
+                        >
+                          {children}
+                        </strong>
+                      )
+                    },
+                    h1({ children, ...props }) {
+                      return (
+                        <h1
+                          className='text-3xl font-bold text-gray-900 dark:text-gray-100 my-6'
+                          {...props}
+                        >
+                          {children}
+                        </h1>
+                      )
+                    },
+                    h2({ children, ...props }) {
+                      return (
+                        <h2
+                          className='text-2xl font-semibold text-gray-900 dark:text-gray-200 my-5'
+                          {...props}
+                        >
+                          {children}
+                        </h2>
+                      )
+                    },
+                    h3({ children, ...props }) {
+                      return (
+                        <h3
+                          className='text-xl font-semibold text-gray-900 dark:text-gray-200 my-5'
+                          {...props}
+                        >
+                          {children}
+                        </h3>
+                      )
+                    },
+                    table({ children, ...props }) {
+                      return (
+                        <table
+                          className='min-w-full bg-white dark:bg-gray-800'
+                          {...props}
+                        >
+                          {children}
+                        </table>
+                      )
+                    },
+                    th({ children, ...props }) {
+                      return (
+                        <th
+                          className='px-4 py-2 border-b-2 border-gray-300 text-left text-gray-700 dark:text-gray-300 dark:border-gray-600'
+                          {...props}
+                        >
+                          {children}
+                        </th>
+                      )
+                    },
+                    tr({ children, ...props }) {
+                      return (
+                        <tr
+                          className='border-b border-gray-200 dark:border-gray-700'
+                          {...props}
+                        >
+                          {children}
+                        </tr>
+                      )
+                    },
+                    td({ children, ...props }) {
+                      return (
+                        <td
+                          className='px-4 py-2 border-b border-gray-200 text-gray-700 dark:text-gray-300 dark:border-gray-700'
+                          {...props}
+                        >
+                          {children}
+                        </td>
+                      )
+                    },
                     code({
                       node,
                       inline,
