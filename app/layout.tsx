@@ -15,7 +15,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'KOTHUB',
+  title: 'KOHI TECH',
   description: '코히 테크 블로그',
 }
 
