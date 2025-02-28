@@ -29,7 +29,7 @@ export default function Header() {
       <div className='flex flex-wrap items-center justify-between gap-5 w-full'>
         <Link href='/'>
           <div className='text-2xl font-extrabold relative text-black dark:text-white cursor-pointer transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-700 before:absolute before:bg-black dark:before:bg-white before:origin-center before:h-[4px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-700 after:absolute after:bg-black dark:after:bg-white after:origin-center after:h-[4px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]'>
-            <span>@KOTHUB</span>
+            <span>KOHI TECH</span>
           </div>
         </Link>
         <div className='flex max-lg:ml-auto space-x-3'>

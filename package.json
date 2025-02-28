@@ -1,5 +1,5 @@
 {
-  "name": "kothub",
+  "name": "kohi-tech",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -19,8 +19,8 @@
     "esm": "^3.2.25",
     "fs": "^0.0.1-security",
     "gray-matter": "^4.0.3",
-    "http-proxy-middleware": "^3.0.0",
-    "next": "^14.2.4",
+    "http-proxy-middleware": "^3.0.3",
+    "next": "^14.2.15",
     "notion-client": "^6.16.0",
     "notion-to-md": "^3.1.1",
     "path": "^0.12.7",
